@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Header from '../Header/Header'
+import ArticleList from '../ArticleList/ArticleList'
 
 
 import './App.css'
@@ -11,7 +12,7 @@ function App() {
     <div className="body">
       <Header/>
       <main>
-        {/*<ArticleList/>*/}
+        <ArticleList/>
       </main>
       {/*<Pagination/>*/}
     </div>

@@ -1,0 +1,62 @@
+.signUp {
+   background-color: rgba(255, 255, 255, 1);
+   height:auto;
+   max-width: 380px;
+   display:flex;
+   flex-direction:column;
+   justify-content: center;
+   gap:12px;
+   align-items:center;
+   padding: 48px 36px;
+   border: 1px solid rgba(217, 217, 217, 1);
+   border-radius: 6px;
+   margin: 20px auto;
+   h3 {
+      font-size: 20px;
+      font-weight: 600;
+   }
+   
+   input {
+      width: 320px;
+      height: auto;
+      border: 1px solid rgba(217, 217, 217, 1);
+      border-radius: 4px;
+      
+      color: rgba(191, 191, 191, 1);
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+padding: 8px 12px;
+margin-bottom: 12px;
+   }
+   .agree {
+      max-width: 320px;
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      gap: 10px;
+      align-items: start;
+      
+      input {
+         width: 16px;
+         height: 16px;
+         margin-top: 5px;
+         border:1px solid rgba(24, 144, 255, 1);
+         border-radius: 2px;
+         
+      }
+   }
+   button {
+      background-color: rgba(24, 144, 255, 1);
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      width: 320px;
+      height: auto;
+      font-size: 16px;
+   }
+   a {
+      color: rgba(24, 144, 255, 1);
+   }
+}
