@@ -67,18 +67,18 @@ const editProfile = async (userData, API_KEY) => {
   }
 }
 
-export const getArticles = async () => {
+export const getArticles = async (offset=0) => {
   try {
-     const response = await axios.get(`${_APIBASE}/articles?limit=5`)
+     const response = await axios.get(`${_APIBASE}/articles?limit=5&offset=${offset}`)
      return response.data
   } catch (err) {
     console.error(err)
   }
 }
 
-const getArticle = async (slug) => {
+export const getArticle = async (slug) => {
   try {
-    const response = await axios.get(`_APIBASE/articles/${slug}`)
+    const response = await axios.get(`${_APIBASE}/articles/${slug}`)
     return response.data.article
   } catch (err) {
     console.error(err)

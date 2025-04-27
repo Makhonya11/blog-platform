@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react"
+import { Button } from "antd"
 import styles from './Header.module.scss'
 
 const Header = () => {
@@ -8,8 +8,8 @@ const Header = () => {
       <div className={styles.header}>
         <h2>Realworld Blog</h2>
         <div className="signIn">
-          <Button variant="ghost">Sign In</Button>
-          <Button variant="outline" className={styles.button}>
+          <Button ghost='true' variant="text" color="black">Sign In</Button>
+          <Button variant="outlined" color="green" className={styles.button}>
             Sign Up
           </Button>
         </div>
@@ -19,7 +19,7 @@ const Header = () => {
     <div className={styles.header}>
       <h2>Realworld Blog</h2>
       <div>
-        <Button variant="outline" size="xs">
+        <Button variant="outlined" color="green" size="small">
           Create article
         </Button>
         <div className="profile">
@@ -30,7 +30,7 @@ const Header = () => {
             alt=""
           />
         </div>
-        <Button variant="outline" className={styles.button}>
+        <Button variant="outlined" size="large" className={styles.button}>
           Log Out
         </Button>
       </div>

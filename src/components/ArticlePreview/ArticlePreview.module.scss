@@ -2,6 +2,7 @@
     width: 941px;
     height: auto;
     border-radius: 5px;
+    overflow-wrap: anywhere;
 
     background-color: rgb(255, 255, 255);
     padding:15px;
@@ -42,13 +43,24 @@
     flex-direction: row;
     gap: 10px;
     font-size: 20px;
+    align-items: center;
+    h2 {
+        cursor: pointer;
+        color: rgba(24, 144, 255, 1);
+    }
 }
 
 .tags {
 grid-area: tags;
+span {
+    margin-right: 8px;
+
+}
 }
 
 .overview {
     grid-area: overview;
-
+margin: 10px 0px 20px 0px;
 }
+
+  
