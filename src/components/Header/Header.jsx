@@ -1,15 +1,21 @@
-import { Button } from "antd"
+import { Button } from 'antd'
+import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux'
 import styles from './Header.module.scss'
 
 const Header = () => {
-    const LoggedIn = true
-  if (!LoggedIn)
+  const loggedIn = useSelector((state) => state.user.isLogged)
+  const userName = useSelector((state) => state.user.currentUser.username)
+  const navigate = useNavigate()
+  if (!loggedIn)
     return (
       <div className={styles.header}>
         <h2>Realworld Blog</h2>
         <div className="signIn">
-          <Button ghost='true' variant="text" color="black">Sign In</Button>
-          <Button variant="outlined" color="green" className={styles.button}>
+          <Button ghost="true" variant="text" color="black" onClick={() => navigate('/sign-in')}>
+            Sign In
+          </Button>
+          <Button variant="outlined" color="green" className={styles.button} onClick={() => navigate('/sign-up')}>
             Sign Up
           </Button>
         </div>
@@ -23,7 +29,7 @@ const Header = () => {
           Create article
         </Button>
         <div className="profile">
-          <span>Nick Name</span>
+          <span>{userName}</span>
           <img
             className="avatar"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-m1KzF62VzCpv2H9zErVDRkq8izPa0o1Zg&s"

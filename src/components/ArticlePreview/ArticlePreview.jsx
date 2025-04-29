@@ -8,7 +8,7 @@ import { format } from 'date-fns'
 
 import styles from './ArticlePreview.module.scss'
 
-const ArticlePreview = ({ article: {slug, tagList, author, title, updatedAt, description, favoritesCount } }) => {
+const ArticlePreview = ({ article: { slug, tagList, author, title, updatedAt, description, favoritesCount } }) => {
   const updateDate = format(updatedAt, 'MMMM d, yyyy')
   const dispatch = useDispatch()
   let tagCounter = 1
@@ -17,11 +17,12 @@ const ArticlePreview = ({ article: {slug, tagList, author, title, updatedAt, des
   return (
     <li className={styles.article}>
       <div className={styles.title}>
-        <h2 
-        onClick={async () => {
-          await dispatch(fetchArticle(slug))
-          navigate('/articles/s')
-        } }> 
+        <h2
+          onClick={async () => {
+            await dispatch(fetchArticle(slug))
+            navigate(`/articles/${slug}`)
+          }}
+        >
           {title}
         </h2>
 
@@ -30,9 +31,7 @@ const ArticlePreview = ({ article: {slug, tagList, author, title, updatedAt, des
       </div>
       <div className={styles.tags}>
         {tagList.map((tag) => (
-          <Tag key={tagCounter++}>
-            {tag}
-          </Tag>
+          <Tag key={tagCounter++}>{tag}</Tag>
         ))}
       </div>
       <p className={styles.overview}>{description}</p>
@@ -46,6 +45,5 @@ const ArticlePreview = ({ article: {slug, tagList, author, title, updatedAt, des
     </li>
   )
 }
-
 
 export default ArticlePreview

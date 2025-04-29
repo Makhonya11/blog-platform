@@ -2,17 +2,11 @@ import axios from "axios"
 
 const _APIBASE = 'https://blog-platform.kata.academy/api'
 
-const register = async (userData) => {
+export const register = async (userData) => {
   try {
     const response = await axios.post(
-      `_APIBASE/users`,
-      {
-        user: {
-          username: userData.username,
-          email: userData.email,
-          password: userData.password,
-        },
-      },
+      `${_APIBASE}/users`,
+      userData,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -25,16 +19,11 @@ const register = async (userData) => {
   }
 }
 
-const logIn = async (userData) => {
+export const login = async (userData) => {
   try {
     const response = await axios.post(
-      `_APIBASE/users/login`,
-      {
-        user: {
-          email: userData.email,
-          password: userData.password,
-        },
-      },
+      `${_APIBASE}/users/login`,
+      userData,
       {
         headers: {
           'Content-Type': 'application/json',
