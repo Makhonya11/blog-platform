@@ -1,22 +1,54 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { register, login } from '../utilites/blogAPI'
+import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit'
+import { register, login, editProfile, getCurrentUser } from '../utilites/blogAPI'
 
-export const registerUser = createAsyncThunk('user/registerUser', async (data) => {
-  const userData = await register(data)
-  console.log(userData)
-  return userData
+export const registerUser = createAsyncThunk('user/registerUser', async (data, {rejectWithValue}) => {
+  try {
+    const userData = await register(data)
+    localStorage.setItem('authToken', userData.token)
+    return userData
+  } catch (err) {
+    console.log(err.response.data.errors)
+    return rejectWithValue(err.response.data.errors)
+  }
 })
-export const loginUser = createAsyncThunk('user/login', async (data) => {
+export const loginUser = createAsyncThunk('user/login', async (data, {rejectWithValue}) => {
+  try {
     const userData = await login(data)
+
+      localStorage.setItem('authToken', userData.token)
+        return userData 
+
+  } catch (err) {
+    console.log(err.response.data.errors)
+    return rejectWithValue(err.response.data.errors)
+  } 
+  })
+
+  export const updateProfile = createAsyncThunk('user/updateProfile', 
+    async({data, token}, {rejectWithValue}) => {
+      try {
+        const userData = await editProfile(data, token)
+        return userData
+      } catch (err) {
+        return rejectWithValue(err.response.data.errors)
+      }
+    }
+  )
+
+  export const getUser = createAsyncThunk('user/getUser', async (token,) => {
+    const userData = await getCurrentUser(token)
     console.log(userData)
     return userData
   })
+
+
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
     isLogged:false,
     currentUser: {},
+    errors: {},
   },
   reducers: {
     logOut: (state) => {
@@ -27,14 +59,16 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.fulfilled, (state, action) => {
+    .addCase(updateProfile.fulfilled, (state, action) => {
+      state.currentUser = action.payload
+    })
+      .addMatcher(
+        isAnyOf (registerUser.fulfilled, loginUser.fulfilled, getUser.fulfilled ), 
+        (state, action) => {
         state.currentUser = action.payload
         state.isLogged = true
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload
-        state.isLogged = true
-      })
+      
       .addMatcher(
         (action) => action.type.endsWith('/pending'),
         (state) => {
@@ -43,8 +77,8 @@ const userSlice = createSlice({
       )
       .addMatcher(
         (action) => action.type.endsWith('/rejected'),
-        (state) => {
-          //state.isLoading = true
+        (state, action) => {
+          state.errors = action.payload
         }
       )
   },

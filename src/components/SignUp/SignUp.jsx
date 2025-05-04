@@ -1,37 +1,49 @@
 import styles from './SignUp.module.scss'
 import { useNavigate } from 'react-router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { registerUser } from '../../store/UserSlice'
 
 const SignUp = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const errorsAPI = useSelector((state) => state.user.errors)
   const {
 register,
-handleSubmit,
-formState:{errors},
-  } = useForm()
-  const getFormData = (e) => {
-    const formData = new FormData(e.target)
+getValues,
+formState:{errors, isValid},
+watch,
+trigger,
+  } = useForm({
+    mode: 'onBlur',
+  })
+  const getFormData = () => {
+    const formData = getValues()
     return {
       user: {
-        username: formData.get('username'),
-        email: formData.get('email'),
-        password: formData.get('password'),
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
       }
     }
-   
   }
+
+  const password = watch('password')
+
   return (
     <div className={styles.signUp}>
       <h3>Create new account</h3>
       <form 
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault()
-        dispatch(registerUser(getFormData(e)))
-        navigate('/')
-        
+        try {
+           await dispatch(registerUser(getFormData())).unwrap()
+               navigate('/')
+            } catch (error) {
+              if (errorsAPI.username) toast('Это имя уже занято', {theme:'dark'})
+              if (errorsAPI.email) toast('Этот email уже используется', {theme:'dark'})
+          }
       }}
       >
         <label htmlFor="username">Username</label>
@@ -51,6 +63,7 @@ formState:{errors},
             message: 'Только латинские буквы в нижнем регистре и цифры'
           }
         })}
+        className={errors.username? styles.invalid: null}
         />
         {errors.username && <p>{errors.username.message}</p>}
         <label htmlFor="email">Email address</label>
@@ -62,6 +75,7 @@ formState:{errors},
             message: 'Проверьте правильность электронной почты'
           }
         })}
+        className={errors.username? styles.invalid: null}
         />
         {errors.email && <p>{errors.email.message}</p>}
         <label htmlFor="password">Password</label>
@@ -81,19 +95,35 @@ formState:{errors},
             message: 'Пробелы недопустимы'
           }
         })}
+        className={errors.username? styles.invalid: null}
         />
         {errors.password && <p>{errors.password.message}</p>}
         <label htmlFor="confirm">Repeat Password</label>
-        <input type="password" id="confirm" placeholder="Password" />
+        <input type="password" id="confirm" placeholder="Password" 
+        {...register('confirmPassword', {
+          validate: (value) => value === password || 'Пароли не совпадают'
+        })}
+        onChange={(e) => {
+          register('confirmPassword').onChange(e);
+          trigger('confirmPassword')
+        }}
+        className={errors.username? styles.invalid: null}
+        />
+        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         <div className={styles.agree}>
           <input type="checkbox" id="agree" 
           {...register("agree", {
             required: "Примите соглашение",
           })}
+          onChange={(e) => {
+            register('agree').onChange(e);
+            trigger('agree')
+          }}
           />
           <label htmlFor="agree">I agree to the processing of my personal information</label>
         </div>
-        <button type="submit">Create</button>
+          {errors.agree && <p>{errors.agree.message}</p>}
+        <button type="submit" disabled={!isValid}>Create</button>
       </form>
       <p>
         Already have an account?

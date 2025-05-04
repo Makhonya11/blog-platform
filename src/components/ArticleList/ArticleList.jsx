@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
 import { useEffect } from 'react'
+import PagePagination from '../Pagination/Pagination'
 
 const ArticleList = () => {
   
@@ -18,6 +19,7 @@ const articles = useSelector((state) => state.articles.list)
 const isLoading = useSelector((state) => state.articles.isLoading)
 
   return (
+    <>
     <ul className={styles.articleList}>
       {isLoading? 
       <Spin indicator={<LoadingOutlined spin />} size="large" />
@@ -25,6 +27,8 @@ const isLoading = useSelector((state) => state.articles.isLoading)
         <ArticlePreview key={article.slug} article={article}/>
       ))}
     </ul>
+    <PagePagination/>
+    </>
   )
 }
 

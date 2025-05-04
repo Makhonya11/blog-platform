@@ -1,16 +1,36 @@
 import { Button } from 'antd'
-import { useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useNavigate, Link } from 'react-router'
+import { useSelector, useDispatch } from 'react-redux'
+import { logOut, getUser } from '../../store/UserSlice'
 import styles from './Header.module.scss'
 
 const Header = () => {
   const loggedIn = useSelector((state) => state.user.isLogged)
   const userName = useSelector((state) => state.user.currentUser.username)
+  const avatar = useSelector((state) => state.user.currentUser.image)
+  
+  const authToken = localStorage.getItem('authToken')
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  useEffect(() => {
+    if (authToken) {
+      dispatch(getUser(authToken))
+    }
+  }, [])
+const Title = () =>  (
+<Link 
+  to={"/articles"}
+  >
+  <h2>Realworld Blog</h2> 
+  </Link>
+  )
+
+
   if (!loggedIn)
     return (
       <div className={styles.header}>
-        <h2>Realworld Blog</h2>
+        <Title/>
         <div className="signIn">
           <Button ghost="true" variant="text" color="black" onClick={() => navigate('/sign-in')}>
             Sign In
@@ -23,20 +43,27 @@ const Header = () => {
     )
   return (
     <div className={styles.header}>
-      <h2>Realworld Blog</h2>
+      <Title/>
       <div>
-        <Button variant="outlined" color="green" size="small">
+        <Button variant="outlined" color="green" size="small" onClick={() => navigate('/new-article')}>
           Create article
         </Button>
-        <div className="profile">
+        <Link className={styles.profile}
+        to={"/profile"}
+        >
           <span>{userName}</span>
           <img
             className="avatar"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-m1KzF62VzCpv2H9zErVDRkq8izPa0o1Zg&s"
+            src={avatar}
             alt=""
           />
-        </div>
-        <Button variant="outlined" size="large" className={styles.button}>
+        </Link>
+        <Button variant="outlined" size="large" className={styles.button}
+        onClick={() => {
+          dispatch(logOut())
+          localStorage.removeItem('authToken')
+        } }
+        > 
           Log Out
         </Button>
       </div>

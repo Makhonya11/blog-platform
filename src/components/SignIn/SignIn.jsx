@@ -2,36 +2,73 @@ import styles from './SignIn.module.scss'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../store/UserSlice'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 const SignIn = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const authToken = useSelector((state) => state.user.currentUser.token)
-  const getFormData = (e) => {
-    const formData = new FormData(e.target)
+  const {
+    register,
+    getValues,
+    formState:{errors, isValid},
+      } = useForm({
+        mode: 'onChange',
+      })
+  
+  const getFormData = () => {
     return {
-      user: {
-        email: formData.get('email'),
-        password: formData.get('password'),
-      }
+      user: getValues(),
     }
   }
   return (
     <div className={styles.signIn}>
       <h3>Sign In</h3>
-      <form action="/submit" method="post"
+      <form 
       onSubmit={async(e) => {
         e.preventDefault()
-        await dispatch(loginUser(getFormData(e)))
-        localStorage.setItem('authToken', authToken)
-        navigate('/')
+        try {
+          await dispatch(loginUser(getFormData())).unwrap()
+          navigate('/')
+        } catch (error) {
+          toast('Неверный логин или пароль')
+
+        }
       }}
       >
         <label htmlFor="email">Email address</label>
-        <input type="email" id="email" name="email" placeholder="Email address" />
+        <input type="email" id="email" name="email" placeholder="Email address" 
+        {...register("email", {
+          required: "Обязательное поле",
+          pattern:{
+            value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: 'Проверьте правильность электронной почты'
+          }
+        })}
+        className={errors.username? styles.invalid: null}
+        />
+        {errors.email && <p>{errors.email.message}</p>}
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Password" />
-        <button type="submit">Login</button>
+        <input type="password" id="password" name="password" placeholder="Password" 
+        {...register("password", {
+          required: "Обязательное поле",
+        minLength: {
+          value:6,
+          message: 'От 6 до 40 символов',
+                },
+          maxLength:{
+            value:40,
+            message: 'От 6 до 40 символов',
+          },
+          pattern:{
+            value:/^\S+$/,
+            message: 'Пробелы недопустимы'
+          }
+        })}
+        className={errors.username? styles.invalid: null}
+        />
+         {errors.password && <p>{errors.password.message}</p>}
+        <button type="submit" disabled={!isValid}>Login</button>
       </form>
       <p>
         Don’t have an account?

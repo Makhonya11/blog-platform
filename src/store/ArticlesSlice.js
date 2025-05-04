@@ -12,7 +12,7 @@ export const fetchArticle = createAsyncThunk(
     'articles/fetchArticle', 
     async(slug) => {
         const data = await getArticle(slug)
-        console.log(data.slug)
+        console.log(data)
         return data
     }
 )

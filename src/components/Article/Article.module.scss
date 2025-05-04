@@ -1,4 +1,5 @@
 .article {
+    margin: 20px auto;
     width: 941px;
     height: auto;
     border-radius: 5px;
@@ -12,7 +13,7 @@
     grid-template-areas:
     'title author' 
     'tags author' 
-    'overview author'
+    'overview buttons'
     'text text';
     column-gap:80px;
     row-gap: 5px;
@@ -63,6 +64,36 @@ span {
     grid-area: overview;
 margin: 10px 0px 20px 0px;
 }
+.buttons {
+    grid-area: buttons;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    button {
+        width: 78px;
+        background-color: white;
+        border-radius: 5px;
+        height: 31px;
+
+    }
+    .deleteArticle {
+        color: rgba(245, 34, 45, 1);
+        border: 1px solid rgba(245, 34, 45, 1);
+        &:hover{
+            background-color: rgba(245, 34, 45, 1);
+            color: white;
+        }
+    }
+    .editArticle {
+        color: rgba(82, 196, 26, 1);
+        border: 1px solid rgba(82, 196, 26, 1);
+        &:hover{
+            background-color: rgba(82, 196, 26, 1);
+            color: white;
+        }
+    }
+    }
+
 .text {
     grid-area: text;
     font-size: 20px;

@@ -10,7 +10,7 @@
    box-shadow: 0px 9.19px 44.28px 0px rgba(0, 0, 0, 0.0503);
    
    box-shadow: 0px 22px 106px 0px rgba(0, 0, 0, 0.07);
-   
+
     background-color: rgba(255, 255, 255, 1);
     height:auto;
     max-width: 380px;
@@ -27,7 +27,10 @@
        font-size: 20px;
        font-weight: 600;
     }
-    
+    form p {
+      margin: 5px 0;
+      color: red;
+   }
     input {
        width: 320px;
        height: auto;
@@ -40,7 +43,10 @@
  line-height: 24px;
  padding: 8px 12px;
  margin-bottom: 12px;
-    }
+ &.invalid {
+   border-color: red;
+ }
+}
     button {
         background-color: rgba(24, 144, 255, 1);
         color: white;
@@ -51,6 +57,11 @@
         height: auto;
         font-size: 16px;
         border-color: transparent;
+        cursor: pointer;
+        &:disabled {
+         opacity: 50%;
+         cursor: default;
+        }
      }
      
   }

@@ -16,6 +16,7 @@ export const register = async (userData) => {
     return response.data.user
   } catch (err) {
     console.error(err)
+    throw(err)
   }
 }
 
@@ -32,21 +33,18 @@ export const login = async (userData) => {
     )
     return response.data.user
   } catch (err) {
-    console.error(err)
+    console.error(err) 
+    throw(err)
   }
 }
 
-const editProfile = async (userData, API_KEY) => {
+export const getCurrentUser = async (token) => {
   try {
-    const response = await axios.post(
-      `_APIBASE/user`,
-      {
-        userData,
-      },
+    const response = await axios.get(
+      `${_APIBASE}/user`,
       {
         headers: {
-          Authorization: API_KEY,
-          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
         },
       }
     )
@@ -55,6 +53,28 @@ const editProfile = async (userData, API_KEY) => {
     console.error(err)
   }
 }
+
+export const editProfile = async (userData, token) => {
+
+  try {
+    console.log(token)
+    const response = await axios.put(
+      `${_APIBASE}/user`,
+      userData,
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    return response.data.user
+  } catch (err) {
+    console.error(err)
+    throw(err)
+  }
+}
+
 
 export const getArticles = async (offset=0) => {
   try {
@@ -73,3 +93,39 @@ export const getArticle = async (slug) => {
     console.error(err)
   }
 }
+export const createArticle = async (article, token) => {
+  try {
+    const response = await axios.post(
+      `${_APIBASE}/articles`,
+    article, 
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      }
+    }
+    )
+    console.log (response.data.article)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const editeArticle = async (article, token) => {
+  try {
+    const response = await axios.put(
+      `${_APIBASE}/articles`,
+    article, 
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      }
+    }
+    )
+    console.log (response.data.article)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
