@@ -4,13 +4,16 @@ import Markdown from 'react-markdown'
 import { format } from 'date-fns'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import {deleteArticle} from '../utilites/blogAPI.js'
+import { Popconfirm } from "antd";
 
 import styles from './Article.module.scss'
 
 const Article = () => {
   const navigate = useNavigate()
+  const token = localStorage.getItem('authToken')
     const article = useSelector((state) => state.articles.currentArticle)
-  const { body, tagList, author, title, updatedAt, description, favoritesCount } = article
+  const { body, tagList, author, title, updatedAt, description, favoritesCount, slug } = article
     const updateDate = format(updatedAt, 'MMMM d, yyyy')
 
   return (
@@ -36,7 +39,22 @@ const Article = () => {
         <img src={author.image} alt="" />
       </div>
       <div className={styles.buttons}>
-        <button className={styles.deleteArticle}>Delete</button>
+ <Popconfirm
+            placement="rightTop"
+            title={text}
+            description={description}
+            okText="Yes"
+            cancelText="No"
+          >
+            <button className={styles.deleteArticle} onClick={() => {
+      deleteArticle(slug, token)}
+          navigate('/articles')
+        }>
+          Delete
+        </button>
+          </Popconfirm>
+        
+       
         <button className={styles.editArticle} onClick={() => navigate(`/articles/{article.slug}/edit`)}>Edit</button>
       </div>
       <div className={styles.text}>
