@@ -143,4 +143,33 @@ export const deleteArticle = async (slug, token) => {
     console.error(err)
   }
 }
+export const addLike = async (slug, token) => {
+  try {
+    const response = axios.post(
+      `${_APIBASE}/articles/{slug}/favorite`,
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+      }
+    }
+    )
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const removeLike = async (slug, token) => {
+  try {
+    const response = axios.delete(
+      `${_APIBASE}/articles/{slug}/favorite`,
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+      }
+    }
+    )
+    return response.data.article
+  } catch (err) {
+    console.error(err)
+  }
+}
 
