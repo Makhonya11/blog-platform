@@ -41,14 +41,15 @@ const Article = () => {
       <div className={styles.buttons}>
  <Popconfirm
             placement="rightTop"
-            title={text}
-            description={description}
+            title={'Are you sure to delete this article?'}
+            description={'Delete the article'}
             okText="Yes"
             cancelText="No"
-          >
-            <button className={styles.deleteArticle} onClick={() => {
-      deleteArticle(slug, token)}
-          navigate('/articles')
+            onConfirm={() => {
+            deleteArticle(slug, token)
+            navigate('/articles')
+            }>
+            <button className={styles.deleteArticle}
         }>
           Delete
         </button>
