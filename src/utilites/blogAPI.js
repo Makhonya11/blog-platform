@@ -128,4 +128,19 @@ export const editeArticle = async (article, token) => {
     console.error(err)
   }
 }
+export const deleteArticle = async (slug, token) => {
+  try {
+    axios.delete(
+      `${_APIBASE}/articles/{slug}`,
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      }
+    }
+    )
+  } catch (err) {
+    console.error(err)
+  }
+}
 
