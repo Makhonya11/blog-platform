@@ -50,6 +50,20 @@
         cursor: default;
         color: rgba(24, 144, 255, 1);
     }
+    button {
+        all: unset;
+        cursor: pointer;
+        &:disabled{
+            cursor: default;
+        }
+        &.liked path {
+            color: red;
+        }
+        &.notLiked path {
+            color: black;
+        }
+        
+    }
 }
 
 .tags {
@@ -74,7 +88,11 @@ margin: 10px 0px 20px 0px;
         background-color: white;
         border-radius: 5px;
         height: 31px;
-
+        cursor: pointer;
+        &:disabled{
+            opacity: 50%;
+            cursor: auto;
+        }
     }
     .deleteArticle {
         color: rgba(245, 34, 45, 1);

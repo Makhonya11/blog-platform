@@ -4,23 +4,33 @@ import Markdown from 'react-markdown'
 import { format } from 'date-fns'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import {deleteArticle} from '../utilites/blogAPI.js'
+import {deleteArticle, addLike, removeLike} from '../../utilites/blogAPI'
 import { Popconfirm } from "antd";
 
 import styles from './Article.module.scss'
 
 const Article = () => {
+  const currentUser = useSelector((state) => state.user.currentUser.username)
   const navigate = useNavigate()
   const token = localStorage.getItem('authToken')
     const article = useSelector((state) => state.articles.currentArticle)
-  const { body, tagList, author, title, updatedAt, description, favoritesCount, slug } = article
+  const { body, tagList, author, title, updatedAt, description, favoritesCount, slug, favorited } = article
     const updateDate = format(updatedAt, 'MMMM d, yyyy')
 
   return (
     <div className={styles.article}>
       <div className={styles.title}>
         <h2> {title}</h2>
+        <button className={favorited? styles.liked: styles.notLiked} disabled={!token} onClick={() => {
+          if (favorited) {
+            removeLike(slug, token)
+          } 
+          else {
+            addLike(slug, token)
+          }
+        }}>
         <HeartOutlined />
+        </button>
         <span>{favoritesCount}</span>
       </div>
       <div className={styles.tags}>
@@ -48,15 +58,14 @@ const Article = () => {
             onConfirm={() => {
             deleteArticle(slug, token)
             navigate('/articles')
-            }>
-            <button className={styles.deleteArticle}
-        }>
+            }}>
+            <button className={styles.deleteArticle} disabled={currentUser!==author.username}>
           Delete
         </button>
           </Popconfirm>
         
        
-        <button className={styles.editArticle} onClick={() => navigate(`/articles/{article.slug}/edit`)}>Edit</button>
+        <button className={styles.editArticle} disabled={currentUser!==author.username} onClick={() => navigate(`/articles/{article.slug}/edit`)}>Edit</button>
       </div>
       <div className={styles.text}>
         <Markdown>{body}</Markdown>

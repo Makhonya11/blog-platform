@@ -76,18 +76,39 @@ export const editProfile = async (userData, token) => {
 }
 
 
-export const getArticles = async (offset=0) => {
+export const getArticles = async (offset=0, token) => {
+  console.log(token)
+  const headers = await token
+  ? {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  }
+  :{}
   try {
-     const response = await axios.get(`${_APIBASE}/articles?limit=5&offset=${offset}`)
+     const response = await axios.get(
+       `${_APIBASE}/articles?limit=5&offset=${offset}`,
+       headers
+       )
      return response.data
   } catch (err) {
     console.error(err)
   }
 }
 
-export const getArticle = async (slug) => {
+export const getArticle = async (slug, token) => {
+  console.log(token)
+  const headers = await token
+  ? {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  }
+  :{}
   try {
-    const response = await axios.get(`${_APIBASE}/articles/${slug}`)
+    const response = await axios.get(`${_APIBASE}/articles/${slug}`,
+    headers
+    )
     return response.data.article
   } catch (err) {
     console.error(err)
@@ -130,7 +151,7 @@ export const editeArticle = async (article, token) => {
 }
 export const deleteArticle = async (slug, token) => {
   try {
-    axios.delete(
+    await axios.delete(
       `${_APIBASE}/articles/{slug}`,
     {
       headers: {
@@ -144,29 +165,34 @@ export const deleteArticle = async (slug, token) => {
   }
 }
 export const addLike = async (slug, token) => {
+  console.log(token)
   try {
-    const response = axios.post(
-      `${_APIBASE}/articles/{slug}/favorite`,
+    const response = await axios.post(
+      `${_APIBASE}/articles/${slug}/favorite`,
+      null,
     {
       headers: {
         Authorization: `Token ${token}`,
       }
     }
     )
+    console.log(response.data.article)
+    return response.data.article
   } catch (err) {
     console.error(err)
   }
 }
 export const removeLike = async (slug, token) => {
   try {
-    const response = axios.delete(
-      `${_APIBASE}/articles/{slug}/favorite`,
+    const response = await axios.delete(
+      `${_APIBASE}/articles/${slug}/favorite`,
     {
       headers: {
         Authorization: `Token ${token}`,
       }
     }
     )
+    console.log(response.data.article)
     return response.data.article
   } catch (err) {
     console.error(err)

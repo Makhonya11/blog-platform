@@ -8,10 +8,11 @@ import { useEffect } from 'react'
 import PagePagination from '../Pagination/Pagination'
 
 const ArticleList = () => {
-  
+  const token = localStorage.getItem('authToken')
+  const offset = 0
 const dispatch = useDispatch()
 useEffect (() =>{
-dispatch(fetchArticles())
+dispatch(fetchArticles({offset, token}))
 
 }, []) 
 

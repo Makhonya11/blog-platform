@@ -1,17 +1,35 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getArticles, getArticle } from "../utilites/blogAPI";
+import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
+import { getArticles, getArticle, addLike, removeLike } from "../utilites/blogAPI";
 
 export const fetchArticles = createAsyncThunk (
     'articles/fetchArticles',
-    async(offset) => {
-        const data = await getArticles(offset)
+    async({offset, token}) => {
+        const data = await getArticles(offset, token)
+        console.log(data)
         return data
     }
 )
 export const fetchArticle = createAsyncThunk(
     'articles/fetchArticle', 
-    async(slug) => {
-        const data = await getArticle(slug)
+    async({slug, token}) => {
+        const data = await getArticle(slug, token)
+        console.log(data)
+        return data
+    }
+)
+
+export const fetchAddLike = createAsyncThunk(
+    'articles/fetchAddLike', 
+    async({slug, token}) => {
+        const data = await addLike(slug, token)
+        console.log(data)
+        return data
+    }
+)
+export const fetchRemoveLike = createAsyncThunk(
+    'articles/fetchRemoveLike', 
+    async({slug, token}) => {
+        const data = await addLike(slug, token)
         console.log(data)
         return data
     }
@@ -37,7 +55,9 @@ const articlesSlice = createSlice (
                 state.list = action.payload.articles
                 state.total = action.payload.articlesCount
                 })
-            .addCase(fetchArticle.fulfilled, (state, action) => {
+            .addMatcher(
+                isAnyOf(fetchArticle.fulfilled, fetchAddLike.fulfilled, fetchRemoveLike.fulfilled,) ,
+                (state, action) => {
                     state.isLoading = false
                     state.currentArticle = action.payload
                     })

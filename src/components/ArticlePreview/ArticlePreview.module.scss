@@ -48,6 +48,20 @@
         cursor: pointer;
         color: rgba(24, 144, 255, 1);
     }
+    button {
+        all: unset;
+        cursor: pointer;
+        &:disabled{
+            cursor: default;
+        }
+        &.liked path {
+            color: red;
+        }
+        &.notLiked path {
+            color: black;
+        }
+        
+    }
 }
 
 .tags {

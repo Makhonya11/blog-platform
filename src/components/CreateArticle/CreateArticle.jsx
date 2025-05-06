@@ -1,8 +1,10 @@
 import { useForm, useFieldArray } from "react-hook-form"
 import styles from './CreateArticle.module.scss'
 import { createArticle } from "../../utilites/blogAPI"
+import { useNavigate } from "react-router"
 
 const CreateArticle = () => {
+  const navigate = useNavigate()
     const token = localStorage.getItem('authToken')
     const {
         register,
@@ -30,9 +32,10 @@ return (
     <div className={styles.newArticle}>
         <h2>Create new article</h2>
         <form 
-        onSubmit={(e) => {
+        onSubmit={async(e) => {
             e.preventDefault()
-            createArticle(getFormData(), token)
+            await createArticle(getFormData(), token)
+            navigate('/articles')
         }}
         >
             <label htmlFor="title">Title</label>

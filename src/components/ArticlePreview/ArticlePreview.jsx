@@ -5,11 +5,14 @@ import { Link, Links, useNavigate } from 'react-router'
 import { fetchArticle } from '../../store/ArticlesSlice'
 import { useDispatch } from 'react-redux'
 import { format } from 'date-fns'
+import { addLike, removeLike } from '../../utilites/blogAPI'
 
 import styles from './ArticlePreview.module.scss'
 
-const ArticlePreview = ({ article: { slug, tagList, author, title, updatedAt, description, favoritesCount } }) => {
+const ArticlePreview = ({ article: { slug, tagList, author, title, updatedAt, description, favoritesCount, favorited } }) => {
   const updateDate = format(updatedAt, 'MMMM d, yyyy')
+  const token = localStorage.getItem('authToken')
+  let liked = favorited
   const dispatch = useDispatch()
   let tagCounter = 1
   const navigate = useNavigate()
@@ -19,14 +22,23 @@ const ArticlePreview = ({ article: { slug, tagList, author, title, updatedAt, de
       <div className={styles.title}>
         <h2
           onClick={async () => {
-            await dispatch(fetchArticle(slug))
+            await dispatch(fetchArticle({slug, token}))
             navigate(`/articles/${slug}`)
           }}
         >
           {title}
         </h2>
-
+<button className={favorited? styles.liked: styles.notLiked} disabled={!token} onClick={() => {
+if (!favorited) {
+  navigate("/sign-in")
+} 
+else {
+  favorited? removeLike(slug, token): addLike(slug, token)
+}
+} }>
         <HeartOutlined />
+
+</button >
         <span>{favoritesCount}</span>
       </div>
       <div className={styles.tags}>
