@@ -5,9 +5,11 @@ import styles from './Pagination.module.scss'
 
 const PagePagination = () => {
   const dispatch = useDispatch()
+  const token = localStorage.getItem('authToken')
   const totalCount = useSelector((state) => state.articles.total)
   const isLoading = useSelector((state) => state.articles.isLoading)
   const currentArticle = useSelector((state) => state.articles.currentArticle)
+  const startCount = (pageNumber) => pageNumber*5-5
 
   return (
     <Pagination
@@ -18,7 +20,8 @@ const PagePagination = () => {
       align="center"
       showSizeChanger={false}
       onChange={(page) => {
-        dispatch(fetchArticles(page * 5 - 5))
+        const currentStartCount = startCount(page)
+        dispatch(fetchArticles({token, currentStartCount}))
         window.scrollTo(0, 0)
       }}
     />

@@ -28,7 +28,7 @@ const EditArticle = () => {
       
       const getFormData = () => {
         const newData = getValues()
-        const newArticle = Object.keys(dirtyFields).map((acc, key) => {
+        const newArticle = Object.keys(dirtyFields).reduce((acc, key) => {
         acc[key] = newData[key]
         return acc
         }, {})
@@ -43,7 +43,8 @@ return (
         <form 
         onSubmit={(e) => {
             e.preventDefault()
-            editeArticle(getFormData(), token)
+            const newData = getFormData()
+            editeArticle(newData, token)
         }}
         >
             <label htmlFor="title">Title</label>

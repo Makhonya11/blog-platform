@@ -2,10 +2,10 @@ import { Tag } from 'antd'
 import { HeartOutlined } from '@ant-design/icons'
 import Markdown from 'react-markdown'
 import { Link, Links, useNavigate } from 'react-router'
-import { fetchArticle } from '../../store/ArticlesSlice'
+import { fetchArticle, fetchLikeSwitcher } from '../../store/ArticlesSlice'
 import { useDispatch } from 'react-redux'
 import { format } from 'date-fns'
-import { addLike, removeLike } from '../../utilites/blogAPI'
+
 
 import styles from './ArticlePreview.module.scss'
 
@@ -28,12 +28,12 @@ const ArticlePreview = ({ article: { slug, tagList, author, title, updatedAt, de
         >
           {title}
         </h2>
-<button className={favorited? styles.liked: styles.notLiked} disabled={!token} onClick={() => {
-if (!favorited) {
+<button className={favorited? styles.liked: styles.notLiked}  onClick={() => {
+if (!token) {
   navigate("/sign-in")
 } 
 else {
-  favorited? removeLike(slug, token): addLike(slug, token)
+  dispatch(fetchLikeSwitcher({slug, token , favorited}))
 }
 } }>
         <HeartOutlined />

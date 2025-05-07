@@ -76,7 +76,7 @@ export const editProfile = async (userData, token) => {
 }
 
 
-export const getArticles = async (offset=0, token) => {
+export const getArticles = async (token, offset=0) => {
   console.log(token)
   const headers = await token
   ? {
@@ -164,38 +164,33 @@ export const deleteArticle = async (slug, token) => {
     console.error(err)
   }
 }
-export const addLike = async (slug, token) => {
-  console.log(token)
-  try {
-    const response = await axios.post(
-      `${_APIBASE}/articles/${slug}/favorite`,
-      null,
-    {
-      headers: {
-        Authorization: `Token ${token}`,
-      }
+export const likeSwitcher = async (slug, token, isLiked) => {
+  console.log(slug)
+  const config =  {
+    headers: {
+      Authorization: `Token ${token}`,
     }
-    )
-    console.log(response.data.article)
-    return response.data.article
+  }
+
+  try {
+    if (!isLiked) {
+      const response = await axios.post(
+        `${_APIBASE}/articles/${slug}/favorite`,
+        null,
+     config
+      )
+      return response.data.article
+    } else {
+      const response = await axios.delete(
+        `${_APIBASE}/articles/${slug}/favorite`,
+      config
+      )
+      return response.data.article
+    }
+    //console.log(response.data.article)
   } catch (err) {
     console.error(err)
   }
 }
-export const removeLike = async (slug, token) => {
-  try {
-    const response = await axios.delete(
-      `${_APIBASE}/articles/${slug}/favorite`,
-    {
-      headers: {
-        Authorization: `Token ${token}`,
-      }
-    }
-    )
-    console.log(response.data.article)
-    return response.data.article
-  } catch (err) {
-    console.error(err)
-  }
-}
+
 

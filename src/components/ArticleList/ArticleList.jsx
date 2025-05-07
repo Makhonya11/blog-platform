@@ -12,7 +12,7 @@ const ArticleList = () => {
   const offset = 0
 const dispatch = useDispatch()
 useEffect (() =>{
-dispatch(fetchArticles({offset, token}))
+dispatch(fetchArticles( {token, offset}))
 
 }, []) 
 

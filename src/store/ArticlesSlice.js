@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
-import { getArticles, getArticle, addLike, removeLike } from "../utilites/blogAPI";
+import { getArticles, getArticle, likeSwitcher  } from "../utilites/blogAPI";
 
 export const fetchArticles = createAsyncThunk (
     'articles/fetchArticles',
-    async({offset, token}) => {
-        const data = await getArticles(offset, token)
+    async({ token, currentStartCount}) => {
+        const data = await getArticles(token, currentStartCount )
         console.log(data)
         return data
     }
@@ -18,18 +18,10 @@ export const fetchArticle = createAsyncThunk(
     }
 )
 
-export const fetchAddLike = createAsyncThunk(
-    'articles/fetchAddLike', 
-    async({slug, token}) => {
-        const data = await addLike(slug, token)
-        console.log(data)
-        return data
-    }
-)
-export const fetchRemoveLike = createAsyncThunk(
-    'articles/fetchRemoveLike', 
-    async({slug, token}) => {
-        const data = await addLike(slug, token)
+export const fetchLikeSwitcher = createAsyncThunk(
+    'articles/fetchLikeSwitcher', 
+    async({slug, token, favorited}) => {
+        const data = await likeSwitcher(slug, token, favorited)
         console.log(data)
         return data
     }
@@ -55,8 +47,13 @@ const articlesSlice = createSlice (
                 state.list = action.payload.articles
                 state.total = action.payload.articlesCount
                 })
+                .addCase (fetchLikeSwitcher.fulfilled, (state, action) => {
+                    state.isLoading = false
+                    state.currentArticle = action.payload
+                    state.list = state.list.map(item => item.slug === action.payload.slug?action.payload: item)
+                })
             .addMatcher(
-                isAnyOf(fetchArticle.fulfilled, fetchAddLike.fulfilled, fetchRemoveLike.fulfilled,) ,
+                isAnyOf(fetchArticle.fulfilled, fetchLikeSwitcher.fulfilled) ,
                 (state, action) => {
                     state.isLoading = false
                     state.currentArticle = action.payload

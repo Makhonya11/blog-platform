@@ -1,34 +1,42 @@
 import { Tag } from 'antd'
+import { useEffect } from 'react'
 import { HeartOutlined } from '@ant-design/icons'
 import Markdown from 'react-markdown'
 import { format } from 'date-fns'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
-import {deleteArticle, addLike, removeLike} from '../../utilites/blogAPI'
+import {deleteArticle} from '../../utilites/blogAPI'
+import { fetchLikeSwitcher, fetchArticle } from '../../store/ArticlesSlice'
 import { Popconfirm } from "antd";
 
 import styles from './Article.module.scss'
 
 const Article = () => {
+  const dispatch = useDispatch()
   const currentUser = useSelector((state) => state.user.currentUser.username)
   const navigate = useNavigate()
   const token = localStorage.getItem('authToken')
+  useEffect(() => {
+    dispatch(fetchArticle({slug, token}))
+  }, [])
+
     const article = useSelector((state) => state.articles.currentArticle)
   const { body, tagList, author, title, updatedAt, description, favoritesCount, slug, favorited } = article
     const updateDate = format(updatedAt, 'MMMM d, yyyy')
-
+    
   return (
     <div className={styles.article}>
       <div className={styles.title}>
         <h2> {title}</h2>
-        <button className={favorited? styles.liked: styles.notLiked} disabled={!token} onClick={() => {
-          if (favorited) {
-            removeLike(slug, token)
+        <button className={favorited? styles.liked: styles.notLiked} 
+        onClick={() => {
+          if (!token) {
+            navigate("/sign-in")
           } 
           else {
-            addLike(slug, token)
+            dispatch(fetchLikeSwitcher({slug, token , favorited}))
           }
-        }}>
+        } }>
         <HeartOutlined />
         </button>
         <span>{favoritesCount}</span>
