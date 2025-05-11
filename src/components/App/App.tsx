@@ -7,6 +7,7 @@ import EditProfile from '../EditProfile/EditProfile'
 import CreateArticle from '../CreateArticle/CreateArticle'
 import EditArticle from '../EditArticle/EditArticle'
 import HeaderLayout from '../HeaderLayuout/HeaderLayuout'
+import NotFound from '../NotFound/NotFound'
 import { ToastContainer } from 'react-toastify'
 
 import './App.css'
@@ -27,7 +28,7 @@ function App() {
             <Route path="/articles/:slug/edit" element={<EditArticle />} />
           </Route>
 
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </main>
       <ToastContainer />
