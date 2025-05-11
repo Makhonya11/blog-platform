@@ -1,35 +1,35 @@
 .header {
-    padding: 16px 22px;
-    height: 80px;
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    column-gap: 10px;
-    a {
-        all: unset;
-        cursor: pointer;
-    }
+  padding: 16px 22px;
+  height: 80px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 10px;
+  a {
+    all: unset;
+    cursor: pointer;
+  }
 
-    div {
-        display: flex;
-        flex-direction: row;
-        justify-content: center; 
-        column-gap: 20px;
-        
-    }
-}
-
-.profile {
+  div {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    
-    img {
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        vertical-align: middle;
-        margin-left: 10px;
-    }
+    align-items: center;
+    column-gap: 20px;
+  }
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
 }

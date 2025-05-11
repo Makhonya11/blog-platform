@@ -1,100 +1,100 @@
 .newArticle {
-    box-shadow: 0px 0.61px 2.93px 0px rgba(0, 0, 0, 0.0197);
-    box-shadow: 0px 1.46px 7.05px 0px rgba(0, 0, 0, 0.0283);
-    box-shadow: 0px 2.75px 13.27px 0px rgba(0, 0, 0, 0.035);
-    box-shadow: 0px 4.91px 23.68px 0px rgba(0, 0, 0, 0.0417);
-    box-shadow: 0px 9.19px 44.28px 0px rgba(0, 0, 0, 0.0503);
-    box-shadow: 0px 22px 106px 0px rgba(0, 0, 0, 0.07);
-    background-color: rgba(255, 255, 255, 1);
-    height:auto;
-    width: 940px;
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
-    gap:20px;
-    align-items:center;
-    padding: 48px 32px;
+  box-shadow: 0px 0.61px 2.93px 0px rgba(0, 0, 0, 0.0197);
+  box-shadow: 0px 1.46px 7.05px 0px rgba(0, 0, 0, 0.0283);
+  box-shadow: 0px 2.75px 13.27px 0px rgba(0, 0, 0, 0.035);
+  box-shadow: 0px 4.91px 23.68px 0px rgba(0, 0, 0, 0.0417);
+  box-shadow: 0px 9.19px 44.28px 0px rgba(0, 0, 0, 0.0503);
+  box-shadow: 0px 22px 106px 0px rgba(0, 0, 0, 0.07);
+  background-color: rgba(255, 255, 255, 1);
+  height: auto;
+  width: 940px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  padding: 48px 32px;
+  border: 1px solid rgba(217, 217, 217, 1);
+  border-radius: 6px;
+  margin: 20px auto;
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  form p {
+    margin: 5px 0;
+    color: red;
+  }
+  input,
+  textarea {
+    width: 874px;
+    height: auto;
     border: 1px solid rgba(217, 217, 217, 1);
-    border-radius: 6px;
-    margin: 20px auto;
-    h2 {
-       font-size: 20px;
-       font-weight: 500;
-    }
-    form p {
-       margin: 5px 0;
-       color: red;
-    }
-    input, textarea {
-       width: 874px;
-       height: auto;
-       border: 1px solid rgba(217, 217, 217, 1);
-       border-radius: 4px;
-       
-       color: rgba(191, 191, 191, 1);
- font-weight: 400;
- font-size: 16px;
- line-height: 24px;
- padding: 8px 12px;
- margin-bottom: 12px;
-    }
+    border-radius: 4px;
 
-    button {
-       background-color: rgba(24, 144, 255, 1);
-       color: white;
-       padding: 10px;
-       border-radius: 4px;
-       text-align: center;
-       width: 320px;
-       height: auto;
-       font-size: 16px;
-       border-color: transparent;
-       cursor: pointer;
-         &:disabled {
-          opacity: 50%;
-          cursor: default;
-         }
-    }
- }
+    color: rgba(191, 191, 191, 1);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
 
- .tagList {
-    margin: 10px 0 20px 0;
-    display: flex;
-   flex-direction: row;
-   gap: 20px;
-   .tags {
+  button {
+    background-color: rgba(24, 144, 255, 1);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    width: 320px;
+    height: auto;
+    font-size: 16px;
+    border-color: transparent;
+    cursor: pointer;
+    &:disabled {
+      opacity: 50%;
+      cursor: default;
+    }
+  }
+}
+
+.tagList {
+  margin: 10px 0 20px 0;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  .tags {
     display: flex;
     flex-direction: column;
     div {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
     }
-   }
-    input {
-        width: 300px;
+  }
+  input {
+    width: 300px;
+  }
+  button {
+    width: 120px;
+    height: auto;
+    background-color: white;
+    height: 40px;
+  }
+  .deleteTag {
+    color: rgba(245, 34, 45, 1);
+    border: 1px solid rgba(245, 34, 45, 1);
+    &:hover {
+      background-color: rgba(245, 34, 45, 1);
+      color: white;
     }
-    button {
-        width: 120px;
-        height: auto;
-        background-color: white;
-        height: 40px;
-
+  }
+  .addTag {
+    color: rgba(24, 144, 255, 1);
+    border: 1px solid rgba(24, 144, 255, 1);
+    &:hover {
+      background-color: rgba(24, 144, 255, 1);
+      color: white;
     }
-    .deleteTag {
-        color: rgba(245, 34, 45, 1);
-        border: 1px solid rgba(245, 34, 45, 1);
-        &:hover{
-            background-color: rgba(245, 34, 45, 1);
-            color: white;
-        }
-    }
-    .addTag {
-        color: rgba(24, 144, 255, 1);
-        border: 1px solid  rgba(24, 144, 255, 1);
-        &:hover{
-            background-color: rgba(24, 144, 255, 1);
-            color: white;
-        }
-    }
- }
+  }
+}

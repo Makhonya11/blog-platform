@@ -1,44 +1,48 @@
 import { Tag } from 'antd'
 import { HeartOutlined } from '@ant-design/icons'
-import Markdown from 'react-markdown'
-import { Link, Links, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { fetchArticle, fetchLikeSwitcher } from '../../store/ArticlesSlice'
 import { useDispatch } from 'react-redux'
 import { format } from 'date-fns'
-
+import { ArticleResponse } from '../../types/types'
+import { AppDispatch } from '../../store'
 
 import styles from './ArticlePreview.module.scss'
 
-const ArticlePreview = ({ article: { slug, tagList, author, title, updatedAt, description, favoritesCount, favorited } }) => {
+const ArticlePreview = ({
+  article: { slug, tagList, author, title, updatedAt, description, favoritesCount, favorited },
+}: {
+  article: ArticleResponse
+}) => {
   const updateDate = format(updatedAt, 'MMMM d, yyyy')
   const token = localStorage.getItem('authToken')
-  let liked = favorited
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   let tagCounter = 1
   const navigate = useNavigate()
 
   return (
     <li className={styles.article}>
       <div className={styles.title}>
-        <h2
+        <h5
           onClick={async () => {
-            await dispatch(fetchArticle({slug, token}))
+            await dispatch(fetchArticle({ slug, token }))
             navigate(`/articles/${slug}`)
           }}
         >
           {title}
-        </h2>
-<button className={favorited? styles.liked: styles.notLiked}  onClick={() => {
-if (!token) {
-  navigate("/sign-in")
-} 
-else {
-  dispatch(fetchLikeSwitcher({slug, token , favorited}))
-}
-} }>
-        <HeartOutlined />
-
-</button >
+        </h5>
+        <button
+          className={favorited ? styles.liked : styles.notLiked}
+          onClick={() => {
+            if (!token) {
+              navigate('/sign-in')
+            } else {
+              dispatch(fetchLikeSwitcher({ slug, token, favorited }))
+            }
+          }}
+        >
+          <HeartOutlined />
+        </button>
         <span>{favoritesCount}</span>
       </div>
       <div className={styles.tags}>

@@ -1,67 +1,71 @@
-.editProfile {
-   box-shadow: 0px 0.61px 2.93px 0px rgba(0, 0, 0, 0.0197);
-
-   box-shadow: 0px 1.46px 7.05px 0px rgba(0, 0, 0, 0.0283);
-   
-   box-shadow: 0px 2.75px 13.27px 0px rgba(0, 0, 0, 0.035);
-   
-   box-shadow: 0px 4.91px 23.68px 0px rgba(0, 0, 0, 0.0417);
-   
-   box-shadow: 0px 9.19px 44.28px 0px rgba(0, 0, 0, 0.0503);
-   
-   box-shadow: 0px 22px 106px 0px rgba(0, 0, 0, 0.07);
-
-    background-color: rgba(255, 255, 255, 1);
-    height:auto;
-    max-width: 380px;
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
-    gap:12px;
-    align-items:center;
-    padding: 48px 36px;
-    border: 1px solid rgba(217, 217, 217, 1);
-    border-radius: 6px;
-    margin: 20px auto;
-    h3 {
-       font-size: 20px;
-       font-weight: 600;
-    }
-    form p {
-      margin: 5px 0;
-      color: red;
-   }
-    input {
-       width: 320px;
-       height: auto;
-       border: 1px solid rgba(217, 217, 217, 1);
-       border-radius: 4px;
-       
-       color: rgba(191, 191, 191, 1);
- font-weight: 400;
- font-size: 16px;
- line-height: 24px;
- padding: 8px 12px;
- margin-bottom: 12px;
- &.invalid {
-   border-color: red;
- }
+.loader {
+  display: block;
+  margin: 150px auto 0 auto;
 }
-    button {
-        background-color: rgba(24, 144, 255, 1);
-        color: white;
-        padding: 10px;
-        border-radius: 4px;
-        text-align: center;
-        width: 320px;
-        height: auto;
-        font-size: 16px;
-        border-color: transparent;
-        cursor: pointer;
-        &:disabled {
-         opacity: 50%;
-         cursor: default;
-        }
-     }
-     
+.editProfile {
+  font-family: 'Roboto';
+  box-shadow: 0px 0.61px 2.93px 0px rgba(0, 0, 0, 0.0197);
+
+  box-shadow: 0px 1.46px 7.05px 0px rgba(0, 0, 0, 0.0283);
+
+  box-shadow: 0px 2.75px 13.27px 0px rgba(0, 0, 0, 0.035);
+
+  box-shadow: 0px 4.91px 23.68px 0px rgba(0, 0, 0, 0.0417);
+
+  box-shadow: 0px 9.19px 44.28px 0px rgba(0, 0, 0, 0.0503);
+
+  box-shadow: 0px 22px 106px 0px rgba(0, 0, 0, 0.07);
+
+  background-color: rgba(255, 255, 255, 1);
+  height: auto;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  padding: 48px 36px;
+  border: 1px solid rgba(217, 217, 217, 1);
+  border-radius: 6px;
+  margin: 20px auto;
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
   }
+  form p {
+    margin: 5px 0;
+    color: red;
+  }
+  input {
+    width: 320px;
+    height: auto;
+    border: 1px solid rgba(217, 217, 217, 1);
+    border-radius: 4px;
+
+    color: rgba(191, 191, 191, 1);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    &.invalid {
+      border-color: red;
+    }
+  }
+  button {
+    background-color: rgba(24, 144, 255, 1);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    width: 320px;
+    height: auto;
+    font-size: 16px;
+    border-color: transparent;
+    cursor: pointer;
+    &:disabled {
+      opacity: 50%;
+      cursor: default;
+    }
+  }
+}

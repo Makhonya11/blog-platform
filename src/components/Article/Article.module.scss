@@ -1,121 +1,129 @@
 .article {
-    margin: 20px auto;
-    width: 941px;
-    height: auto;
-    border-radius: 5px;
-    overflow-wrap: anywhere;
+  margin: 20px auto;
+  width: 941px;
+  height: auto;
+  border-radius: 5px;
+  overflow-wrap: anywhere;
 
-    background-color: rgb(255, 255, 255);
-    padding:15px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-    'title author' 
-    'tags author' 
+  background-color: rgb(255, 255, 255);
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    'title author'
+    'tags author'
     'overview buttons'
     'text text';
-    column-gap:80px;
-    row-gap: 5px;
+  column-gap: 80px;
+  row-gap: 5px;
 
-    .tags, .overview, .author {
-        font-family: Inter;
-        font-weight: 400;
-        font-size: 12px;  
-    }
+  .tags,
+  .overview,
+  .author {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+  }
 }
 .author {
-    grid-area: author;
+  grid-area: author;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  gap: 10px;
+
+  div {
+    margin-top: 5px;
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    vertical-align: middle;
-    img {
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
+    flex-direction: column;
+    span {
+      color: rgba(0, 0, 0, 0.5);
     }
-    h6 {
+  }
+  img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+  }
+  h6 {
     font-size: 18px;
-    }
+  }
 }
 .title {
-    grid-area: title;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    font-size: 20px;
-    align-items: center;
-    h2 {
-        cursor: default;
-        color: rgba(24, 144, 255, 1);
+  grid-area: title;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-size: 20px;
+  align-items: center;
+  h2 {
+    cursor: default;
+    color: rgba(24, 144, 255, 1);
+  }
+  button {
+    all: unset;
+    cursor: pointer;
+    &:disabled {
+      cursor: default;
     }
-    button {
-        all: unset;
-        cursor: pointer;
-        &:disabled{
-            cursor: default;
-        }
-        &.liked path {
-            color: red;
-        }
-        &.notLiked path {
-            color: black;
-        }
-        
+    &.liked path {
+      color: red;
     }
+    &.notLiked path {
+      color: black;
+    }
+  }
 }
 
 .tags {
-grid-area: tags;
-span {
+  grid-area: tags;
+  span {
     margin-right: 8px;
-
-}
+  }
 }
 
 .overview {
-    grid-area: overview;
-margin: 10px 0px 20px 0px;
+  grid-area: overview;
+  margin: 10px 0px 20px 0px;
 }
 .buttons {
-    grid-area: buttons;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    button {
-        width: 78px;
-        background-color: white;
-        border-radius: 5px;
-        height: 31px;
-        cursor: pointer;
-        &:disabled{
-            opacity: 50%;
-            cursor: auto;
-        }
+  margin-top: 10px;
+  grid-area: buttons;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  button {
+    width: 78px;
+    background-color: white;
+    border-radius: 5px;
+    height: 31px;
+    cursor: pointer;
+    &:disabled {
+      opacity: 50%;
+      cursor: auto;
     }
-    .deleteArticle {
-        color: rgba(245, 34, 45, 1);
-        border: 1px solid rgba(245, 34, 45, 1);
-        &:hover{
-            background-color: rgba(245, 34, 45, 1);
-            color: white;
-        }
+  }
+  .deleteArticle {
+    color: rgba(245, 34, 45, 1);
+    border: 1px solid rgba(245, 34, 45, 1);
+    &:hover {
+      background-color: rgba(245, 34, 45, 1);
+      color: white;
     }
-    .editArticle {
-        color: rgba(82, 196, 26, 1);
-        border: 1px solid rgba(82, 196, 26, 1);
-        &:hover{
-            background-color: rgba(82, 196, 26, 1);
-            color: white;
-        }
+  }
+  .editArticle {
+    color: rgba(82, 196, 26, 1);
+    border: 1px solid rgba(82, 196, 26, 1);
+    &:hover {
+      background-color: rgba(82, 196, 26, 1);
+      color: white;
     }
-    }
+  }
+}
 
 .text {
-    grid-area: text;
-    font-size: 20px;
-    max-width: 100%;
-    
-  }
-  
+  grid-area: text;
+  font-size: 20px;
+  max-width: 100%;
+}
